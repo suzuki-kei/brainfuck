@@ -201,12 +201,12 @@ module Brainfuck
         end
 
         def execute_command_output
-            STDOUT.putc(@cells[@cells_index])
+            $stdout.putc(@cells[@cells_index])
             @commands_index += 1
         end
 
         def execute_command_input
-            c = STDIN.getc
+            c = $stdin.getc
             @cells[@cells_index] = c unless c.nil?
             @commands_index += 1
         end
