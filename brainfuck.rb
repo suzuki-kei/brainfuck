@@ -42,7 +42,7 @@ module Brainfuck
         #
         def parse(source_code)
             validate_contains_only_ascii_characters(source_code)
-            validate_all_blackets_are_matched(source_code)
+            validate_all_brackets_are_matched(source_code)
             commands_from_source_code(source_code)
         end
 
@@ -54,14 +54,14 @@ module Brainfuck
             end
         end
 
-        def validate_all_blackets_are_matched(source_code)
-            blacket_nesting_depth = 0
+        def validate_all_brackets_are_matched(source_code)
+            bracket_nesting_depth = 0
 
             source_code.chars.each do |command|
-                blacket_nesting_depth += 1 if command == '['
-                blacket_nesting_depth -= 1 if command == ']'
+                bracket_nesting_depth += 1 if command == '['
+                bracket_nesting_depth -= 1 if command == ']'
 
-                if blacket_nesting_depth < 0
+                if bracket_nesting_depth < 0
                     raise SyntaxError, 'unmatched brackets exists'
                 end
             end
@@ -171,12 +171,12 @@ module Brainfuck
             end
 
             @commands_index += 1
-            blacket_nesting_depth = 1
+            bracket_nesting_depth = 1
 
-            while blacket_nesting_depth > 0
-                blacket_nesting_depth += 1 if @commands[@commands_index] == '['
-                blacket_nesting_depth -= 1 if @commands[@commands_index] == ']'
-                @commands_index += 1 if blacket_nesting_depth > 0
+            while bracket_nesting_depth > 0
+                bracket_nesting_depth += 1 if @commands[@commands_index] == '['
+                bracket_nesting_depth -= 1 if @commands[@commands_index] == ']'
+                @commands_index += 1 if bracket_nesting_depth > 0
             end
         end
 
@@ -187,12 +187,12 @@ module Brainfuck
             end
 
             @commands_index -= 1
-            blacket_nesting_depth = 1
+            bracket_nesting_depth = 1
 
-            while blacket_nesting_depth > 0
-                blacket_nesting_depth -= 1 if @commands[@commands_index] == '['
-                blacket_nesting_depth += 1 if @commands[@commands_index] == ']'
-                @commands_index -= 1 if blacket_nesting_depth > 0
+            while bracket_nesting_depth > 0
+                bracket_nesting_depth -= 1 if @commands[@commands_index] == '['
+                bracket_nesting_depth += 1 if @commands[@commands_index] == ']'
+                @commands_index -= 1 if bracket_nesting_depth > 0
             end
         end
 
