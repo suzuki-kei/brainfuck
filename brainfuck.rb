@@ -65,6 +65,10 @@ module Brainfuck
                     raise SyntaxError, 'unmatched brackets exists'
                 end
             end
+
+            if bracket_nesting_depth != 0
+                raise SyntaxError, 'unmatched brackets exists'
+            end
         end
 
         def commands_from_source_code(source_code)
