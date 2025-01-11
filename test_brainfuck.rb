@@ -142,6 +142,20 @@ module Brainfuck
             assert_equal [0, 111, 0, 100, 0, 33, 0, 10], vm.used_cells
         end
 
+        def test_execute_raises_CommandError_when_cell_value_is_less_than_minimum_value
+            vm = Brainfuck::VirtualMachine.new
+            assert_raises(Brainfuck::CommandError) do
+                vm.execute('+' * 128)
+            end
+        end
+
+        def test_execute_raises_CommandError_when_cell_value_is_greater_than_maximum_value
+            vm = Brainfuck::VirtualMachine.new
+            assert_raises(Brainfuck::CommandError) do
+                vm.execute('-' * 129)
+            end
+        end
+
     end
 
 end
