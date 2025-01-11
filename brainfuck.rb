@@ -10,8 +10,8 @@ module Brainfuck
 
         COMMANDS = %w(+ - > < [ ] . ,).freeze
         NUMBER_OF_CELLS = 30000
-        MIN_CELL_VALUE = 127
-        MAX_CELL_VALUE = -128
+        MAX_CELL_VALUE = 127
+        MIN_CELL_VALUE = -128
 
     end
 
