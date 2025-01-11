@@ -84,6 +84,7 @@ module Brainfuck
         def initialize
             @cells = [0] * NUMBER_OF_CELLS
             @cells_index = 0
+            @max_cells_index = 0
         end
 
         #
@@ -118,6 +119,20 @@ module Brainfuck
         #
         def cells
             @cells.clone
+        end
+
+        #
+        # 使用済みセルの配列.
+        #
+        # '<', '>' コマンドでポインタが到達したことのあるセルが使用済みセルとなる.
+        # 例えば, execute('>>') を実行すると先頭から 3 つのセルが使用済みセルとなる.
+        #
+        # ==== 戻り値
+        # 使用済みセルの配列.
+        # 内部状態を複製した値のため, 戻り値を変更しても VirtualMachine には影響しない.
+        #
+        def used_cells
+            @cells[..@max_cells_index]
         end
 
         private
@@ -168,6 +183,7 @@ module Brainfuck
 
             @cells_index += 1
             @commands_index += 1
+            @max_cells_index = @cells_index if @max_cells_index < @cells_index
         end
 
         def execute_command_move_left
