@@ -156,6 +156,20 @@ module Brainfuck
             end
         end
 
+        def test_execute_raises_CommandError_when_pointer_is_left_of_leftmost
+            vm = Brainfuck::VirtualMachine.new
+            assert_raises(Brainfuck::CommandError) do
+                vm.execute('<')
+            end
+        end
+
+        def test_execute_raises_CommandError_when_pointer_is_right_of_rightmost
+            vm = Brainfuck::VirtualMachine.new
+            assert_raises(Brainfuck::CommandError) do
+                vm.execute('>' * 30000)
+            end
+        end
+
     end
 
 end
