@@ -109,6 +109,17 @@ module Brainfuck
             end
         end
 
+        #
+        # セルの配列.
+        #
+        # ==== 戻り値
+        # セルの配列.
+        # 内部状態を複製した値のため, 戻り値を変更しても VirtualMachine には影響しない.
+        #
+        def cells
+            @cells.clone
+        end
+
         private
 
         COMMAND_TO_METHOD_MAP = {
