@@ -68,7 +68,7 @@ module Brainfuck
         end
 
         def commands_from_source_code(source_code)
-            source_code.chars.select(&COMMANDS.method(:include?)).freeze
+            source_code.chars.select(&COMMANDS.method(:include?)).join.freeze
         end
 
     end
