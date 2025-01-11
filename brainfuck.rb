@@ -90,7 +90,7 @@ module Brainfuck
         #     実行するソースコード.
         #
         # ==== 戻り値
-        # nil.
+        # 常に nil.
         #
         # ==== 例外
         # CommandError::
@@ -98,9 +98,11 @@ module Brainfuck
         #     もしくは, ポインタがセル配列の範囲外に達する場合.
         #
         def execute(source_code)
-            @commands = Parser.new.parse(source_code).freeze
-            @commands_index = 0
-            execute_current_command until finished?
+            nil.tap do
+                @commands = Parser.new.parse(source_code).freeze
+                @commands_index = 0
+                execute_current_command until finished?
+            end
         end
 
         private
