@@ -247,23 +247,7 @@ module Brainfuck
 end
 
 def main
-    source_code = <<~'EOS'
-        ++++++++[->+++++++++<]>.
-        <++++[->+++++++<]>+.
-        +++++++.
-        .
-        +++.
-        >++++[->+++++++++++<]>.
-        ------------.
-        <+++++[->+++++++++++<]>.
-        <++++[->++++++<]>.
-        +++.
-        ------.
-        --------.
-        >++++[->++++++++<]>+.
-        >+++[->++++<]>+.
-        ---.
-    EOS
+    source_code = ARGF.read
     vm = Brainfuck::VirtualMachine.new
     vm.execute(source_code)
 end
