@@ -3,9 +3,9 @@
 
 .PHONY: test
 test:
-	@ruby -I. test_brainfuck.rb
+	@ruby -I./src/main/ ./src/test/test_brainfuck.rb
 
 .PHONY: run
 run:
-	@ruby brainfuck.rb
+	@ruby -I./src/main/ ./src/main/brainfuck.rb
 
