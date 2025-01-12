@@ -233,8 +233,8 @@ module Brainfuck
         end
 
         def execute_command_input
-            c = $stdin.getc
-            @cells[@cells_index] = c unless c.nil?
+            c = $stdin.read(1)
+            @cells[@cells_index] = c.ord unless c.nil?
             @commands_index += 1
         end
 

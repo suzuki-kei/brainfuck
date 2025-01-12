@@ -8,6 +8,14 @@ module Brainfuck
 
         protected
 
+        def capture_stdin(stdin)
+            original_stdin = $stdin
+            $stdin = StringIO.new(stdin.clone, 'r')
+            yield
+        ensure
+            $stdin = original_stdin
+        end
+
         def capture_stdout
             original_stdout = $stdout
             $stdout = StringIO.new
@@ -140,6 +148,16 @@ module Brainfuck
             stdout = capture_stdout { vm.execute(HELLO_WORLD) }
             assert_equal "Hello, World!\r\n", stdout
             assert_equal [0, 111, 0, 100, 0, 33, 0, 10], vm.used_cells
+        end
+
+        def test_execute_input_command
+            vm = Brainfuck::VirtualMachine.new
+            capture_stdin('') { vm.execute(',') }
+            assert_equal [0], vm.used_cells
+
+            vm = Brainfuck::VirtualMachine.new
+            capture_stdin('A') { vm.execute(',') }
+            assert_equal ['A'.ord], vm.used_cells
         end
 
         def test_execute_raises_CommandError_when_cell_value_is_less_than_minimum_value
