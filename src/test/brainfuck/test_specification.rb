@@ -10,15 +10,7 @@ module Brainfuck
         end
 
         def test_COMMANDS
-            assert_equal 8, SpecificationIncluded::COMMANDS.size
-            assert_true SpecificationIncluded::COMMANDS.include?('+')
-            assert_true SpecificationIncluded::COMMANDS.include?('-')
-            assert_true SpecificationIncluded::COMMANDS.include?('>')
-            assert_true SpecificationIncluded::COMMANDS.include?('<')
-            assert_true SpecificationIncluded::COMMANDS.include?('[')
-            assert_true SpecificationIncluded::COMMANDS.include?(']')
-            assert_true SpecificationIncluded::COMMANDS.include?('.')
-            assert_true SpecificationIncluded::COMMANDS.include?(',')
+            assert_equal %w(+ - > < [ ] . ,).sort, SpecificationIncluded::COMMANDS.sort
         end
 
         def test_NUMBER_OF_CELLS
