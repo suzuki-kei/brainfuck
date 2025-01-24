@@ -1,4 +1,5 @@
 require_relative 'errors'
+require_relative 'parser'
 require_relative 'specification'
 
 module Brainfuck
