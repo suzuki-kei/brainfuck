@@ -1,7 +1,4 @@
-require_relative 'brainfuck/errors'
-require_relative 'brainfuck/specification'
-require_relative 'brainfuck/virtual_machine'
-require_relative 'brainfuck/parser'
+Dir.glob(File.absolute_path(__FILE__).sub(/\.rb$/, "#{File::SEPARATOR}*.rb")).each(&method(:require))
 
 def main
     source_code = ARGF.read
