@@ -1,6 +1,6 @@
 require 'stringio'
 require 'test/unit'
-require 'brainfuck'
+require 'brainfuck/virtual_machine'
 require_relative 'base'
 
 module Brainfuck
