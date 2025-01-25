@@ -19,7 +19,7 @@ module Brainfuck
                 +++.
             EOS
             expected = '++++++++[->+++++++++<]>.<++++[->+++++++<]>+.+++++++..+++.'
-            actual = Brainfuck::Parser.new.parse(source_code)
+            actual = Parser.new.parse(source_code)
             assert_equal expected, actual
         end
 
@@ -31,8 +31,8 @@ module Brainfuck
             '>テ+ス+ト<',
         ].each.with_index do |source_code, index|
             define_method("test_parse_raises_ParseError_when_source_code_includes_non_ascii_character_#{index + 1}") do
-                assert_raises(Brainfuck::ParseError) do
-                    Brainfuck::Parser.new.parse(source_code)
+                assert_raises(ParseError) do
+                    Parser.new.parse(source_code)
                 end
             end
         end
@@ -42,8 +42,8 @@ module Brainfuck
             ']',
         ].each.with_index do |source_code, index|
             define_method("test_parse_raises_SyntaxError_when_unmatched_brackets_exists_#{index + 1}") do
-                assert_raises(Brainfuck::SyntaxError) do
-                    Brainfuck::Parser.new.parse(source_code)
+                assert_raises(SyntaxError) do
+                    Parser.new.parse(source_code)
                 end
             end
         end
