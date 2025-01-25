@@ -1,5 +1,4 @@
 require_relative 'base'
-require 'brainfuck/generator'
 require 'brainfuck/virtual_machine'
 
 module Brainfuck
@@ -15,9 +14,15 @@ module Brainfuck
         end
     end
 
-    [Generator1, Generator2].each do |generator_class|
-        name = "#{generator_class.name.split('::').last}TestCase"
-        const_set(name, new_test_case_class(generator_class))
+    (1..2).each do |i|
+        name = "generator#{i}"
+        require "brainfuck/#{name}"
+        generator_class_name = name.capitalize
+        generator_class = const_get(generator_class_name)
+
+        test_case_class_name = "#{generator_class_name}TestCase"
+        test_case_class = new_test_case_class(generator_class)
+        const_set(test_case_class_name, test_case_class)
     end
 
 end

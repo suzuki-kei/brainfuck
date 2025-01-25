@@ -1,6 +1,7 @@
-require 'brainfuck/generator'
-
-GENERATOR_CLASS = Brainfuck.const_get(File.basename(__FILE__, '.rb').sub('main.', '').capitalize)
+File.basename(__FILE__, '.rb').sub('main.', '').tap do |name|
+    require "brainfuck/#{name}"
+    GENERATOR_CLASS = Brainfuck.const_get(name.capitalize)
+end
 
 def main
     text = ARGF.read
