@@ -14,7 +14,7 @@ module Brainfuck
         end
     end
 
-    (1..2).each do |i|
+    (1..3).each do |i|
         name = "generator#{i}"
         require "brainfuck/#{name}"
         generator_class_name = name.capitalize
