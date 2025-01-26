@@ -75,27 +75,19 @@ module Brainfuck
 
         def generate_map
             {}.tap do |map|
-                (0 .. MAX_CELL_VALUE).each do |a|
-                    (MIN_CELL_VALUE .. MAX_CELL_VALUE).each do |b|
-                        if a * b < MIN_CELL_VALUE
-                            next
-                        end
-                        if a * b > MAX_CELL_VALUE
-                            break
-                        end
+                (1 .. MAX_CELL_VALUE).each do |a|
+                    min_b = (MIN_CELL_VALUE / a.to_f).ceil
+                    max_b = (MAX_CELL_VALUE / a.to_f).floor
 
+                    (min_b .. max_b).each do |b|
                         code = Code.new(a, b, 0)
                         shortest_code = map.fetch(code.n, code)
                         map[code.n] = code if code.code_length <= shortest_code.code_length
 
-                        (MIN_CELL_VALUE .. MAX_CELL_VALUE).each do |c|
-                            if a * b + c < MIN_CELL_VALUE
-                                next
-                            end
-                            if a * b + c > MAX_CELL_VALUE
-                                break
-                            end
+                        min_c = MIN_CELL_VALUE - (a * b)
+                        max_c = MAX_CELL_VALUE - (a * b)
 
+                        (min_c .. max_c).each do |c|
                             code = Code.new(a, b, c)
                             shortest_code = map.fetch(code.n, code)
                             map[code.n] = code if code.code_length <= shortest_code.code_length
