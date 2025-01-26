@@ -15,16 +15,14 @@ module Brainfuck
                 case
                     when previous_n.nil?
                         "#{'+' * n}."
-                    when n <= (n - previous_n).abs
-                        ">#{'+' * n}."
                     when n == previous_n
                         '.'
-                    when previous_n < n
-                        "#{'+' * (n - previous_n)}."
-                    when previous_n > n
+                    when n < previous_n && previous_n - n <= n
                         "#{'-' * (previous_n - n)}."
+                    when n > previous_n && n - previous_n <= n
+                        "#{'+' * (n - previous_n)}."
                     else
-                        raise 'Bug'
+                        ">#{'+' * n}."
                 end
             end
         end
