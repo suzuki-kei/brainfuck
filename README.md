@@ -71,6 +71,19 @@ generator2 の改良版です.
     .
     +++.
 
+### ./bin/brainfuck.minify
+
+ソースコードからコマンド以外の文字を削除します.
+
+    # 引数を指定しない場合は標準入力からの入力待ちにります.
+    ./bin/brainfuck.minify
+
+    # ソースコードをファイルで指定することもできます.
+    ./bin/brainfuck.minify samples/hello.b
+
+    # パイプ経由でソースコードを指定することもできます.
+    echo 'A+++++++++++++[-A>B++++++++B<A]A>B.---.+++++++..+++.' | ./bin/brainfuck.minify
+
 ## 設計方針
 
 本インタプリタは以下の方針で設計します.
