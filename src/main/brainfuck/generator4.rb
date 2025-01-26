@@ -13,27 +13,24 @@ module Brainfuck
         private
 
         def generate_codes(ns)
-            code1 = Code1Generator.new.generate(ns)
+            code1 = Code1Generator.new.generate
             code2 = Code2Generator.new.generate(ns, code1)
             [code1, code2]
         end
 
         class Code1Generator
 
-            def generate(ns)
-                <<~'EOS'.strip
-                    +++++
-                    [
-                        -
-                        >
-                        >+++
-                        >+++++++
-                        >++++++++++++
-                        >++++++++++++++++++++
-                        [+++<]
-                        <
-                    ]
-                EOS
+            def generate(a=5, bs=[3, 5, 8, 13], c=3)
+                [
+                    '+' * a,
+                    '[',
+                    '    -',
+                    '    >',
+                    *bs.map {|b| "    >#{'+' * b}"},
+                    "    [#{'+' * c}<]",
+                    '    <',
+                    ']',
+                ].join("\n")
             end
 
         end
