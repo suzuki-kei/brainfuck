@@ -1,6 +1,10 @@
+require_relative 'specification'
+
 module Brainfuck
 
     class Generator3
+
+        include Specification
 
         def generate(text)
             map = generate_map
@@ -69,9 +73,9 @@ module Brainfuck
 
         def generate_map
             {}.tap do |map|
-                (0..255).each do |a|
-                    (0..255).each do |b|
-                        if a * b > 255
+                (0 .. MAX_CELL_VALUE).each do |a|
+                    (0 .. MAX_CELL_VALUE).each do |b|
+                        if a * b > MAX_CELL_VALUE
                             break
                         end
 
@@ -79,8 +83,8 @@ module Brainfuck
                         shortest_code = map.fetch(code.n, code)
                         map[code.n] = code if code.code_length <= shortest_code.code_length
 
-                        (-255..255).each do |c|
-                            if a * b + c < -255 || 255 < a * b + c
+                        (MIN_CELL_VALUE .. MAX_CELL_VALUE).each do |c|
+                            if a * b + c < MIN_CELL_VALUE || MAX_CELL_VALUE < a * b + c
                                 break
                             end
 
