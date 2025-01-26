@@ -14,15 +14,19 @@ module Brainfuck
         end
     end
 
-    (1..3).each do |i|
-        name = "generator#{i}"
-        require "brainfuck/#{name}"
-        generator_class_name = name.capitalize
-        generator_class = const_get(generator_class_name)
+    begin
+        (1..).each do |i|
+            name = "generator#{i}"
+            require "brainfuck/#{name}"
+            generator_class_name = name.capitalize
+            generator_class = const_get(generator_class_name)
 
-        test_case_class_name = "#{generator_class_name}TestCase"
-        test_case_class = new_test_case_class(generator_class)
-        const_set(test_case_class_name, test_case_class)
+            test_case_class_name = "#{generator_class_name}TestCase"
+            test_case_class = new_test_case_class(generator_class)
+            const_set(test_case_class_name, test_case_class)
+        end
+    rescue LoadError
+        # ignore
     end
 
 end
