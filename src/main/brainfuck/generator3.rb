@@ -31,6 +31,8 @@ module Brainfuck
                 code1 = case
                     when @a == 0 || @b == 0
                         ''
+                    when @n < 0
+                        "#{'+' * @a}[->#{'-' * -@b}<]>"
                     else
                         "#{'+' * @a}[->#{'+' * @b}<]>"
                 end
@@ -58,7 +60,7 @@ module Brainfuck
                     if a == 0 || b == 0
                         0
                     else
-                        a + 3 + b + 3
+                        a + 3 + b.abs + 3
                     end
                 code2_length =
                     if c == 0
@@ -74,7 +76,10 @@ module Brainfuck
         def generate_map
             {}.tap do |map|
                 (0 .. MAX_CELL_VALUE).each do |a|
-                    (0 .. MAX_CELL_VALUE).each do |b|
+                    (MIN_CELL_VALUE .. MAX_CELL_VALUE).each do |b|
+                        if a * b < MIN_CELL_VALUE
+                            next
+                        end
                         if a * b > MAX_CELL_VALUE
                             break
                         end
@@ -84,7 +89,10 @@ module Brainfuck
                         map[code.n] = code if code.code_length <= shortest_code.code_length
 
                         (MIN_CELL_VALUE .. MAX_CELL_VALUE).each do |c|
-                            if a * b + c < MIN_CELL_VALUE || MAX_CELL_VALUE < a * b + c
+                            if a * b + c < MIN_CELL_VALUE
+                                next
+                            end
+                            if a * b + c > MAX_CELL_VALUE
                                 break
                             end
 
