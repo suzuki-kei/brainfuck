@@ -3,15 +3,15 @@ module Brainfuck
     class Generator2
 
         def generate(text)
-            chars = text.chars.map(&:ord)
-            codes = generate_codes(chars)
+            ns = text.chars.map(&:ord)
+            codes = generate_codes(ns)
             codes.join("\n")
         end
 
         private
 
-        def generate_codes(chars)
-            chars.zip([nil, *chars]).map do |n, previous_n|
+        def generate_codes(ns)
+            ns.zip([nil, *ns]).map do |n, previous_n|
                 case
                     when previous_n.nil?
                         "#{'+' * n}."

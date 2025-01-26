@@ -4,8 +4,8 @@ module Brainfuck
 
         def generate(text)
             map = generate_map
-            chars = text.chars.map(&:ord)
-            codes = generate_codes(chars, map)
+            ns = text.chars.map(&:ord)
+            codes = generate_codes(ns, map)
             codes.join("\n")
         end
 
@@ -93,8 +93,8 @@ module Brainfuck
             end
         end
 
-        def generate_codes(chars, map)
-            chars.zip([nil, *chars]).map do |n, previous_n|
+        def generate_codes(ns, map)
+            ns.zip([nil, *ns]).map do |n, previous_n|
                 if previous_n.nil?
                     map[n].generate
                 else
