@@ -17,7 +17,7 @@ module Brainfuck
             bs = [8, 3, 12, 5]
 
             (1 .. ns.size * 2).each do |a|
-                (1 .. 20).each do |c|
+                (1 .. 14).each do |c|
                     begin
                         code1 = Code1Generator.new.generate(a, bs, c)
                         code2 = Code2Generator.new.generate(ns, code1)
