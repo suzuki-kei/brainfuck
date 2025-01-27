@@ -7,20 +7,33 @@ module Brainfuck
         def generate(text)
             ns = text.chars.map(&:ord)
             codes = generate_codes(ns)
-            codes.join("\n")
+            codes.sort_by(&:size).first
         end
 
         private
 
         def generate_codes(ns)
-            code1 = Code1Generator.new.generate
-            code2 = Code2Generator.new.generate(ns, code1)
-            [code1, code2]
+            codes = []
+            bs = [8, 3, 12, 5]
+
+            (1 .. ns.size * 2).each do |a|
+                (1 .. 20).each do |c|
+                    begin
+                        code1 = Code1Generator.new.generate(a, bs, c)
+                        code2 = Code2Generator.new.generate(ns, code1)
+                        codes << [code1, code2].join("\n")
+                    rescue CommandError
+                        nil
+                    end
+                end
+            end
+
+            codes.compact
         end
 
         class Code1Generator
 
-            def generate(a=5, bs=[3, 5, 8, 13], c=3)
+            def generate(a=8, bs=[8, 3, 12, 5], c=1)
                 [
                     '+' * a,
                     '[',
