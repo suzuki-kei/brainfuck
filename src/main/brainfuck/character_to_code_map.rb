@@ -12,6 +12,12 @@ module Brainfuck
             @map[n]
         end
 
+        def dump
+            @map.each do |n, code|
+                puts sprintf("%d\t%s", n, code.generate)
+            end
+        end
+
         private
 
         include Specification
@@ -100,5 +106,10 @@ module Brainfuck
 
     end
 
+end
+
+if $0 == __FILE__
+    map = Brainfuck::CharacterToCodeMap.new
+    map.dump
 end
 
