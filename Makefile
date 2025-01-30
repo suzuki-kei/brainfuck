@@ -7,7 +7,7 @@ test:
 
 .PHONY: demonstrate-generators
 demonstrate-generators:
-	@bash ./scripts/demonstrate-generators.sh
+	@bash ./src/scripts/demonstrate-generators.sh
 
 .PHONY: character-to-code-map
 character-to-code-map:
