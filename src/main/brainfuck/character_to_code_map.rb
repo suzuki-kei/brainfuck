@@ -108,8 +108,3 @@ module Brainfuck
 
 end
 
-if $0 == __FILE__
-    map = Brainfuck::CharacterToCodeMap.new
-    map.dump
-end
-

@@ -11,5 +11,5 @@ demonstrate-generators:
 
 .PHONY: character-to-code-map
 character-to-code-map:
-	@ruby -I./src/main/ ./src/main/brainfuck/character_to_code_map.rb
+	@ruby -I./src/main/ ./src/main/main.character_to_code_map.rb
 
