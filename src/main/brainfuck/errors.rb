@@ -1,9 +1,9 @@
 module Brainfuck
 
-    BrainfackError = Class.new(StandardError)
-    ParseError = Class.new(BrainfackError)
-    SyntaxError = Class.new(BrainfackError)
-    CommandError = Class.new(BrainfackError)
+    BrainfuckError = Class.new(StandardError)
+    ParseError = Class.new(BrainfuckError)
+    SyntaxError = Class.new(BrainfuckError)
+    CommandError = Class.new(BrainfuckError)
 
 end
 
