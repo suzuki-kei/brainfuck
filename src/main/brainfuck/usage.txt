@@ -1,0 +1,163 @@
+NAME
+    brainfuck - brainfuck language implementaiton
+
+SYNOPSIS
+    brainfuck [OPTION...] [FILE...]
+    brainfuck SUBCOMMAND [SUBCOMMAND_OPTION...] [FILE...]
+
+DESCRIPTION
+    The brainfuck has the following mode:
+        * interpreter mode (if no subcommand specified)
+        * generator mode (if the generate subcommand specified)
+        * minifier mode (if the minify subcommand specified)
+
+    In every mode, input (e.g. source code) can be specified from standard input or file.
+
+SUBCOMMANDS
+    generate
+        Generates brainfuck code that outputs the specified text.
+
+    minify
+        Removes non command characters from specified brainfuck code.
+
+OPTIONS
+    -h, --help
+        Prints help message and exit.
+
+GENERATOR SUBCOMMAND OPTIONS
+    -1, --generator1
+        Generates brainfuck code that outputs the specified text with algorithm-1.
+        see GENERATOR ALGORITHM-1 DETAILS for details.
+
+    -2, --generator2
+        Generates brainfuck code that outputs the specified text with algorithm-2.
+        see GENERATOR ALGORITHM-2 DETAILS for details.
+
+    -3, --generator3
+        Generates brainfuck code that outputs the specified text with algorithm-3.
+        see GENERATOR ALGORITHM-3 DETAILS for details.
+
+    -4, --generator4
+        Generates brainfuck code that outputs the specified text with algorithm-4.
+        see GENERATOR ALGORITHM-4 DETAILS for details.
+
+    -s, --shortest-codes
+        Prints shortest code to make each cell value.
+
+MINIFY SUBCOMMAND OPTIONS
+    minify subcommand has no options.
+
+GENERATOR ALGORITHM-1 DETAILS
+    Makes target character code by repeating + command.
+
+    Example:
+        $ echo -n 'ABC' | brainfuck generate -1
+        203
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
+
+GENERATOR ALGORITHM-2 DETAILS
+    Improved version of algorithm-1.
+    If code will be shorter, makes target character code based on previous value.
+
+    Example:
+        $ echo -n 'Hello, World!' | brainfuck generate -2
+        311
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
+        +++++++++++++++++++++++++++++.
+        +++++++.
+        .
+        +++.
+        >++++++++++++++++++++++++++++++++++++++++++++.
+        ------------.
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++.
+        ++++++++++++++++++++++++.
+        +++.
+        ------.
+        --------.
+        >+++++++++++++++++++++++++++++++++.
+
+GENERATOR ALGORITHM-3 DETAILS
+    Improved version of algorithm-2.
+    If code will be shorter, makes target character code using loop.
+
+    Example:
+        $ echo -n 'Hello, World!' | brainfuck generate -3
+        176
+        +++++++++[->++++++++<]>.
+        <+++++++[->++++<]>+.
+        +++++++.
+        .
+        +++.
+        >+++++++++++[->++++<]>.
+        ------------.
+        <+++++++++++[->+++++<]>.
+        <++++++[->++++<]>.
+        +++.
+        ------.
+        --------.
+        >++++++++[->++++<]>+.
+
+GENERATOR ALGORITHM-4 DETAILS
+    First, makes several seed values.
+    Next, makes target character codes by changing one of the seed values.
+
+    Example:
+        $ echo -n 'Hello, World!' | brainfuck generate -4
+        123
+        ++++++++
+        [
+            -
+            >
+            >++++++++
+            >+++
+            >++++++++++++
+            >+++++
+            [+<]
+            <
+        ]
+        >>.
+        >>---.
+        +++++++.
+        .
+        +++.
+        >----.
+        <<.
+        <+++++++++++++++.
+        >>.
+        +++.
+        ------.
+        --------.
+        <+.
+
+EXAMPLES
+    Run in interpreter mode, specify source code by standard input:
+        $ brainfuck
+
+    Run in interpreter mode, specify source code by pipe:
+        $ echo '+++++++++++++[->++++++++<]>.---.+++++++..+++.' | brainfuck
+        hello
+
+    Run in interpreter mode, specify source code by file:
+        $ brainfuck src/samples/hello.b
+        Hello, World!
+
+    Run in generator mode (algorithm-3), specify code by pipe:
+        $ echo 'hello' | brainfuck generate -3
+        57
+        +++++++++++++[->++++++++<]>.
+        ---.
+        +++++++.
+        .
+        +++.
+        >++++++++++.
+
+    Run in minifier mode, specify source code by pipe:
+        $ echo 'A+++++++++++++[-A>B++++++++B<A]A>B.---.+++++++..+++.' | brainfuck minify
+        +++++++++++++[->++++++++<]>.---.+++++++..+++.
+
+EXIT STATUS
+    0 if success.
+    1 if an error occurred.
+

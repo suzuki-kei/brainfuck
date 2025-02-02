@@ -13,6 +13,9 @@ module Brainfuck
 
         def run
             case ARGV.first
+                when '-h', '--help'
+                    ARGV.shift
+                    print_help
                 when 'generate'
                     ARGV.shift
                     run_as_generator
@@ -29,6 +32,11 @@ module Brainfuck
         end
 
         private
+
+        def print_help
+            usage_file_path = File.join(File.dirname($0), 'usage.txt')
+            puts File.read(usage_file_path)
+        end
 
         def run_as_interpreter
             source_code = ARGF.read
