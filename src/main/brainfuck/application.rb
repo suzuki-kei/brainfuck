@@ -12,26 +12,73 @@ module Brainfuck
     class Application
 
         def run
-            case ARGV.first
-                when '-h', '--help'
-                    ARGV.shift
+            @options = parse_options
+
+            case @options[:mode]
+                when :help
                     print_help
-                when 'generate'
-                    ARGV.shift
+                when :interpreter
+                    run_as_interpreter
+                when :generator
                     run_as_generator
-                when 'minify'
-                    ARGV.shift
+                when :minifier
                     run_as_minifier
                 else
-                    run_as_interpreter
+                    print_help
             end
         rescue BrainfuckError => error
             $stderr.puts "#{error.class.name.split('::').last} - #{error.to_s}"
+        rescue OptionParser::InvalidOption => error
+            $stderr.puts error.to_s
         rescue Interrupt
             # ignore
         end
 
         private
+
+        def parse_options
+            {}.tap do |options|
+                parser = OptionParser.new
+
+                case ARGV.first
+                    when 'generate'
+                        ARGV.shift
+                        options[:mode] = :generator
+                    when 'minify'
+                        ARGV.shift
+                        options[:mode] = :minifier
+                    else
+                        options[:mode] = :interpreter
+                end
+
+                parser.on('-h', '--help') {
+                    options[:mode] = :help
+                }
+
+                if options[:mode] == :generator
+                    options.merge!({
+                        generator: :generator4,
+                    })
+                    parser.on('-1', '--generator1') {
+                        options[:generator] = :generator1
+                    }
+                    parser.on('-2', '--generator2') {
+                        options[:generator] = :generator2
+                    }
+                    parser.on('-3', '--generator3') {
+                        options[:generator] = :generator3
+                    }
+                    parser.on('-4', '--generator4') {
+                        options[:generator] = :generator4
+                    }
+                    parser.on('-s', '--shortest-codes') {
+                        options[:generator] = :shortest_codes
+                    }
+                end
+
+                parser.parse!(ARGV)
+            end
+        end
 
         def print_help
             usage_file_path = File.join(File.dirname($0), 'usage.txt')
@@ -45,19 +92,19 @@ module Brainfuck
         end
 
         def run_as_generator
-            case option = ARGV.shift
-                when '-1', '--generator1'
+            case @options[:generator]
+                when :generator1
                     generate_code(Generator1.new)
-                when '-2', '--generator2'
+                when :generator2
                     generate_code(Generator2.new)
-                when '-3', '--generator3'
+                when :generator3
                     generate_code(Generator3.new)
-                when '-4', '--generator4'
+                when :generator4
                     generate_code(Generator4.new)
-                when '-s', '--shortest-codes'
+                when :shortest_codes
                     print_shortest_codes
                 else
-                    ARGV.unshift(option)
+                    raise 'Bug'
             end
         end
 
