@@ -7,6 +7,7 @@ def main
     vm.execute(source_code)
 rescue Brainfuck::BrainfuckError => error
     $stderr.puts "#{error.class.name.split('::').last} - #{error.to_s}"
+    exit(1)
 rescue Interrupt
     # ignore
 end
