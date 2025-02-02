@@ -69,7 +69,7 @@ module Brainfuck
         end
 
         def print_shortest_codes
-            map = Brainfuck::CharacterToCodeMap.new
+            map = CharacterToCodeMap.new
             map.dump
         end
 
