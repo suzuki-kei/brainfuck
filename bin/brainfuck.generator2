@@ -5,5 +5,5 @@ set -eu -o posix -o pipefail
 declare -gr ROOT_DIR="$(cd -- "$(dirname "$0")/.." && pwd)"
 declare -gr SRC_DIR="${ROOT_DIR}/src/main"
 declare -gr BASE_NAME="$(basename "$0")"
-ruby -I "${SRC_DIR}" "${SRC_DIR}/main.${BASE_NAME#brainfuck.}.rb" "$@"
+ruby -I "${SRC_DIR}" "${SRC_DIR}/brainfuck/application.rb" generate "--${BASE_NAME#brainfuck.}" "$@"
 
