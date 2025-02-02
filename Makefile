@@ -9,7 +9,7 @@ test:
 demonstrate-generators:
 	@bash ./src/scripts/demonstrate-generators.sh
 
-.PHONY: character-to-code-map
-character-to-code-map:
+.PHONY: shortest-codes
+shortest-codes:
 	@ruby -I./src/main/ ./src/main/brainfuck/application.rb generate --shortest-codes
 
