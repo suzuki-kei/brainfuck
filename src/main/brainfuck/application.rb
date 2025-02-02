@@ -1,4 +1,5 @@
 require 'optparse'
+require_relative 'composite_generator'
 require_relative 'errors'
 require_relative 'generator1'
 require_relative 'generator2'
@@ -57,8 +58,11 @@ module Brainfuck
 
                 if options[:mode] == :generator
                     options.merge!({
-                        generator: :generator4,
+                        generator: :composite_generator,
                     })
+                    parser.on('-0') {
+                        options[:generator] = :composite_generator
+                    }
                     parser.on('-1', '--generator1') {
                         options[:generator] = :generator1
                     }
@@ -93,6 +97,8 @@ module Brainfuck
 
         def run_as_generator
             case @options[:generator]
+                when :composite_generator
+                    generate_code(new_composite_generator)
                 when :generator1
                     generate_code(Generator1.new)
                 when :generator2
@@ -106,6 +112,15 @@ module Brainfuck
                 else
                     raise 'Bug'
             end
+        end
+
+        def new_composite_generator
+            CompositeGenerator.new([
+                Generator1.new,
+                Generator2.new,
+                Generator3.new,
+                Generator4.new,
+            ])
         end
 
         def generate_code(generator)

@@ -25,6 +25,9 @@ OPTIONS
         Prints help message and exit.
 
 GENERATOR SUBCOMMAND OPTIONS
+    -0
+        Generates brainfuck code from all generators and outputs the shortest one.
+
     -1, --generator1
         Generates brainfuck code that outputs the specified text with algorithm-1.
         see GENERATOR ALGORITHM-1 DETAILS for details.
