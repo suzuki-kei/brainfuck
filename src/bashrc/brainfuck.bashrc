@@ -21,5 +21,5 @@ function _brainfuck.bash_complete
     esac
 }
 
-complete -F _brainfuck.bash_complete brainfuck
+complete -o default -F _brainfuck.bash_complete brainfuck
 
