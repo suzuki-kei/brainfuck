@@ -4,5 +4,13 @@ set -eu -o posix -o pipefail
 
 declare -gr ROOT_DIR="$(cd -- "$(dirname "$0")/.." && pwd)"
 declare -gr SRC_DIR="${ROOT_DIR}/src/main"
-ruby -I "${SRC_DIR}" "${SRC_DIR}/brainfuck/application.rb" "$@"
+
+case "${1:-}" in
+    -h | --help)
+        ruby -I "${SRC_DIR}" "${SRC_DIR}/brainfuck/application.rb" "$@" | less -F
+        ;;
+    *)
+        ruby -I "${SRC_DIR}" "${SRC_DIR}/brainfuck/application.rb" "$@"
+        ;;
+esac
 
