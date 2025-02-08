@@ -33,6 +33,19 @@ module Brainfuck
 
         class Code1Generator
 
+            #
+            # ++++++++++    " a = 10
+            # [
+            #     -
+            #     >
+            #     >+        " bs[1] = 1
+            #     >++++++++ " bs[2] = 8
+            #     >+++++    " bs[3] = 5
+            #     >+++++++  " bs[4] = 7
+            #     [++<]     " c = 2
+            #     <
+            # ]
+            #
             def generate(a, bs, c)
                 [
                     '+' * a,
