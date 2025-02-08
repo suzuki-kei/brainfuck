@@ -14,9 +14,9 @@ module Brainfuck
 
         def generate_codes(ns)
             codes = []
-            bs = [8, 3, 12, 5]
+            bs = [1, 8, 5, 7]
 
-            (1 .. ns.size * 2).each do |a|
+            (1 .. ns.size).each do |a|
                 (1 .. 14).each do |c|
                     begin
                         code1 = Code1Generator.new.generate(a, bs, c)
@@ -33,7 +33,7 @@ module Brainfuck
 
         class Code1Generator
 
-            def generate(a=8, bs=[8, 3, 12, 5], c=1)
+            def generate(a, bs, c)
                 [
                     '+' * a,
                     '[',
