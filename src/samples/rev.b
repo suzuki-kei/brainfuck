@@ -1,12 +1,9 @@
 #
-# memory layout:
-#     Z0 Cn I F
-#
-# usage:
-#     Z0 : 0
-#     Cn : buffered characters
-#     I  : input value
-#     F  : if input value is LF then 1 else 0
+# MEMORY LAYOUT
+#     Z0 = 0
+#     Cn = buffered characters
+#     I  = input value
+#     F  = if input value is LF then 1 else 0
 #
 
 Z0  >
