@@ -1,4 +1,5 @@
 require 'optparse'
+require_relative 'code_map'
 require_relative 'composite_generator'
 require_relative 'errors'
 require_relative 'generator1'
@@ -6,11 +7,14 @@ require_relative 'generator2'
 require_relative 'generator3'
 require_relative 'generator4'
 require_relative 'parser'
+require_relative 'specification'
 require_relative 'virtual_machine'
 
 module Brainfuck
 
     class Application
+
+        include Specification
 
         def run
             @options = parse_options
@@ -131,8 +135,9 @@ module Brainfuck
         end
 
         def print_shortest_codes
-            map = CharacterToCodeMap.new
-            map.dump
+            CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE).sort.each do |n, code|
+                puts sprintf("%d\t%s", n, code.generate)
+            end
         end
 
         def run_as_minifier

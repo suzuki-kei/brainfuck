@@ -1,11 +1,14 @@
-require_relative 'character_to_code_map'
+require_relative 'code_map'
+require_relative 'specification'
 
 module Brainfuck
 
     class Generator3
 
+        include Specification
+
         def initialize
-            @map = CharacterToCodeMap.new
+            @code_map = CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE)
         end
 
         def generate(text)
@@ -19,19 +22,15 @@ module Brainfuck
         def generate_codes(ns)
             ns.zip([nil, *ns]).map do |n, previous_n|
                 if previous_n.nil?
-                    @map[n].generate
+                    "#{@code_map[n].generate}."
                 else
-                    code1 = @map[n]
-                    code2 = @map[n - previous_n]
+                    code1 = @code_map[n]
+                    code2 = @code_map[n - previous_n]
 
-                    if code1.code_length < code2.code_length
-                        ">#{code1.generate}"
+                    if code1.size < code2.size
+                        ">#{code1.generate}."
                     else
-                        if code2.generate.include?('[')
-                            "<#{code2.generate}"
-                        else
-                            "#{code2.generate}"
-                        end
+                        "#{code2.generate}."
                     end
                 end
             end
