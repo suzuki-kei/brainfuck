@@ -149,8 +149,8 @@ module Brainfuck
             map = CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE)
             ns = ARGF.read.chars.map(&:ord)
             codes = ns.map{|n| map[n].generate}
-            codes = codes.map{|code| "#{code}>".gsub(/>$/, '')}
-            puts codes.join(">\n")
+            codes = codes.map{|code| "#{code}>".gsub(/<>$/, '')}
+            puts codes.join("\n")
         end
 
         def run_as_minifier
