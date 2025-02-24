@@ -159,6 +159,14 @@ EXAMPLES
         +++.
         >++++++++++.
 
+    Run in generator mode (string builder):
+        $ echo -n 'hello' | brainfuck generate -s
+        >++++++++[-<+++++++++++++>]
+        >++++++++++[-<++++++++++>]<+>
+        >+++++++++[-<++++++++++++>]
+        >+++++++++[-<++++++++++++>]
+        >++++++++++[-<+++++++++++>]<+>
+
     Run in minifier mode, specify source code by pipe:
         $ echo 'A+++++++++++++[-A>B++++++++B<A]A>B.---.+++++++..+++.' | brainfuck minify
         +++++++++++++[->++++++++<]>.---.+++++++..+++.
