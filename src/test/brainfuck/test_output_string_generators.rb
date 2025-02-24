@@ -16,7 +16,7 @@ module Brainfuck
 
     begin
         (1..).each do |i|
-            name = "generator#{i}"
+            name = "output_generator#{i}"
             require "brainfuck/#{name}"
             generator_class_name = name.capitalize
             generator_class = const_get(generator_class_name)

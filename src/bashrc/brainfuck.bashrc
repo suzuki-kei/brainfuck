@@ -7,16 +7,22 @@ function _brainfuck.bash_complete
     declare -r word="${COMP_WORDS[${COMP_CWORD}]}"
 
     case "${COMP_WORDS[1]}" in
-        generate)
+        build-string-generator)
+            # no-operation
+            ;;
+        output-string-generator)
             if [[ ${COMP_CWORD} -le 2 ]]; then
-                COMPREPLY=($(compgen -W '-0 -1 --generator1 -2 --generator2 -3 --generator3 -4 --generator4 -s --shortest-codes' -- "${word}"))
+                COMPREPLY=($(compgen -W '-a --algorithm-all -1 --algorithm-1 -2 --algorithm-2 -3 --algorithm-3 -4 --algorithm-4' -- "${word}"))
             fi
+            ;;
+        shortest-code-map-generator)
+            # no-operation
             ;;
         minify)
             # no-operation
             ;;
         *)
-            COMPREPLY=($(compgen -W '-h --help generate minify' -- "${word}"))
+            COMPREPLY=($(compgen -W '-h --help build-string-generator output-string-generator shortest-code-map-generator minify' -- "${word}"))
             ;;
     esac
 }

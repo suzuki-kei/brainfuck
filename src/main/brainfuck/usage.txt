@@ -8,14 +8,23 @@ SYNOPSIS
 DESCRIPTION
     The brainfuck has the following mode:
         * interpreter mode (if no subcommand specified)
-        * generator mode (if the generate subcommand specified)
+        * build-string-generator mode (if the build-string-generator subcommand specified)
+        * output-string-generator mode (if the output-string-generator subcommand specified)
+        * shortest-code-map-generator mode (if the shortest-code-map-generator subcommand specified)
         * minifier mode (if the minify subcommand specified)
 
     In every mode, input (e.g. source code) can be specified from standard input or file.
 
 SUBCOMMANDS
-    generate
-        Generates brainfuck code that outputs the specified text.
+    build-string-generator
+        Generates brainfuck code that builds the specified string.
+
+    output-string-generator
+        Generates brainfuck code that outputs the specified string.
+        see OUTPUT STRING GENERATOR OPTIONS for details.
+
+    shortest-code-map-generator
+        Prints shortest code to make each cell value.
 
     minify
         Removes non command characters from specified brainfuck code.
@@ -24,36 +33,36 @@ OPTIONS
     -h, --help
         Prints help message and exit.
 
-GENERATOR SUBCOMMAND OPTIONS
-    -0
+BUILD STRING GENERATOR SUBCOMMAND OPTIONS
+    has no options.
+
+OUTPUT STRING GENERATOR SUBCOMMAND OPTIONS
+    -a, algorithm-all
         Generates brainfuck code from all generators and outputs the shortest one.
 
-    -1, --generator1
-        Generates brainfuck code that outputs the specified text with algorithm-1.
-        see GENERATOR ALGORITHM-1 DETAILS for details.
+    -1, --algorithm-1
+        Generates brainfuck code that outputs the specified string with algorithm-1.
+        see OUTPUT STRING GENERATOR ALGORITHM-1 DETAILS for details.
 
-    -2, --generator2
-        Generates brainfuck code that outputs the specified text with algorithm-2.
-        see GENERATOR ALGORITHM-2 DETAILS for details.
+    -2, --algorithm-2
+        Generates brainfuck code that outputs the specified string with algorithm-2.
+        see OUTPUT STRING GENERATOR ALGORITHM-2 DETAILS for details.
 
-    -3, --generator3
-        Generates brainfuck code that outputs the specified text with algorithm-3.
-        see GENERATOR ALGORITHM-3 DETAILS for details.
+    -3, --algorithm-3
+        Generates brainfuck code that outputs the specified string with algorithm-3.
+        see OUTPUT STRING GENERATOR ALGORITHM-3 DETAILS for details.
 
-    -4, --generator4
-        Generates brainfuck code that outputs the specified text with algorithm-4.
-        see GENERATOR ALGORITHM-4 DETAILS for details.
+    -4, --algorithm-4
+        Generates brainfuck code that outputs the specified string with algorithm-4.
+        see OUTPUT STRING GENERATOR ALGORITHM-4 DETAILS for details.
 
-    -m, --code-map
-        Prints shortest code to make each cell value.
-
-    -s, --string-builder
-        Generates brainfuck code that builds the specified text from the current cell onwards.
+SHORTEST CODE MAP GENERATOR SUBCOMMAND OPTIONS
+    has no options.
 
 MINIFY SUBCOMMAND OPTIONS
-    minify subcommand has no options.
+    has no options.
 
-GENERATOR ALGORITHM-1 DETAILS
+OUTPUT STRING GENERATOR ALGORITHM-1 DETAILS
     Makes target character code by repeating + command.
 
     Example:
@@ -63,7 +72,7 @@ GENERATOR ALGORITHM-1 DETAILS
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>
         +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
 
-GENERATOR ALGORITHM-2 DETAILS
+OUTPUT STRING GENERATOR ALGORITHM-2 DETAILS
     Improved version of algorithm-1.
     If code will be shorter, makes target character code based on previous value.
 
@@ -84,7 +93,7 @@ GENERATOR ALGORITHM-2 DETAILS
         --------.
         >+++++++++++++++++++++++++++++++++.
 
-GENERATOR ALGORITHM-3 DETAILS
+OUTPUT STRING GENERATOR ALGORITHM-3 DETAILS
     Improved version of algorithm-2.
     If code will be shorter, makes target character code using loop.
 
@@ -105,7 +114,7 @@ GENERATOR ALGORITHM-3 DETAILS
         --------.
         >>++++[-<++++++++>]<+.
 
-GENERATOR ALGORITHM-4 DETAILS
+OUTPUT STRING GENERATOR ALGORITHM-4 DETAILS
     First, makes several seed values.
     Next, makes target character codes by changing one of the seed values.
 
@@ -149,7 +158,15 @@ EXAMPLES
         $ brainfuck src/samples/hello.b
         Hello, World!
 
-    Run in generator mode (algorithm-3), specify code by pipe:
+    Run in build-string-generator mode (string builder):
+        $ echo -n 'hello' | brainfuck generate -s
+        >++++++++[-<+++++++++++++>]
+        >++++++++++[-<++++++++++>]<+>
+        >+++++++++[-<++++++++++++>]
+        >+++++++++[-<++++++++++++>]
+        >++++++++++[-<+++++++++++>]<+>
+
+    Run in output-string-generator mode (algorithm-3), specify code by pipe:
         $ echo 'hello' | brainfuck generate -3
         58
         >++++++++[-<+++++++++++++>]<.
@@ -158,14 +175,6 @@ EXAMPLES
         .
         +++.
         >++++++++++.
-
-    Run in generator mode (string builder):
-        $ echo -n 'hello' | brainfuck generate -s
-        >++++++++[-<+++++++++++++>]
-        >++++++++++[-<++++++++++>]<+>
-        >+++++++++[-<++++++++++++>]
-        >+++++++++[-<++++++++++++>]
-        >++++++++++[-<+++++++++++>]<+>
 
     Run in minifier mode, specify source code by pipe:
         $ echo 'A+++++++++++++[-A>B++++++++B<A]A>B.---.+++++++..+++.' | brainfuck minify

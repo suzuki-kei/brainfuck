@@ -2,7 +2,7 @@ require_relative 'virtual_machine'
 
 module Brainfuck
 
-    class Generator4
+    class OutputStringGenerator4
 
         def generate(text)
             ns = text.chars.map(&:ord)

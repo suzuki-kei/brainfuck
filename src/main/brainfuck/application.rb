@@ -1,11 +1,11 @@
 require 'optparse'
 require_relative 'code_map'
-require_relative 'composite_generator'
+require_relative 'composite_output_string_generator'
 require_relative 'errors'
-require_relative 'generator1'
-require_relative 'generator2'
-require_relative 'generator3'
-require_relative 'generator4'
+require_relative 'output_string_generator1'
+require_relative 'output_string_generator2'
+require_relative 'output_string_generator3'
+require_relative 'output_string_generator4'
 require_relative 'parser'
 require_relative 'specification'
 require_relative 'virtual_machine'
@@ -24,8 +24,12 @@ module Brainfuck
                     print_help
                 when :interpreter
                     run_as_interpreter
-                when :generator
-                    run_as_generator
+                when :build_string_generator
+                    run_as_build_string_generator
+                when :output_string_generator
+                    run_as_output_string_generator
+                when :shortest_code_map_generator
+                    run_as_shortest_code_map_generator
                 when :minifier
                     run_as_minifier
                 else
@@ -46,9 +50,15 @@ module Brainfuck
                 parser = OptionParser.new
 
                 case ARGV.first
-                    when 'generate'
+                    when 'build-string-generator'
                         ARGV.shift
-                        options[:mode] = :generator
+                        options[:mode] = :build_string_generator
+                    when 'output-string-generator'
+                        ARGV.shift
+                        options[:mode] = :output_string_generator
+                    when 'shortest-code-map-generator'
+                        ARGV.shift
+                        options[:mode] = :shortest_code_map_generator
                     when 'minify'
                         ARGV.shift
                         options[:mode] = :minifier
@@ -60,30 +70,24 @@ module Brainfuck
                     options[:mode] = :help
                 }
 
-                if options[:mode] == :generator
+                if options[:mode] == :output_string_generator
                     options.merge!({
-                        generator: :composite_generator,
+                        generator: :composite_output_string_generator,
                     })
-                    parser.on('-0') {
-                        options[:generator] = :composite_generator
+                    parser.on('-a', '--algorithm-all') {
+                        options[:generator] = :composite_output_string_generator
                     }
-                    parser.on('-1', '--generator1') {
-                        options[:generator] = :generator1
+                    parser.on('-1', '--algorithm-1') {
+                        options[:generator] = :output_string_generator1
                     }
-                    parser.on('-2', '--generator2') {
-                        options[:generator] = :generator2
+                    parser.on('-2', '--algorithm-2') {
+                        options[:generator] = :output_string_generator2
                     }
-                    parser.on('-3', '--generator3') {
-                        options[:generator] = :generator3
+                    parser.on('-3', '--algorithm-3') {
+                        options[:generator] = :output_string_generator3
                     }
-                    parser.on('-4', '--generator4') {
-                        options[:generator] = :generator4
-                    }
-                    parser.on('-m', '--code-map') {
-                        options[:generator] = :code_map
-                    }
-                    parser.on('-s', '--string-bulder') {
-                        options[:generator] = :string_builder
+                    parser.on('-4', '--algorithm-4') {
+                        options[:generator] = :output_string_generator4
                     }
                 end
 
@@ -102,37 +106,37 @@ module Brainfuck
             vm.execute(source_code)
         end
 
-        def run_as_generator
+        def run_as_build_string_generator
+            generate_build_string_code
+        end
+
+        def run_as_output_string_generator
             case @options[:generator]
-                when :composite_generator
-                    generate_code(new_composite_generator)
-                when :generator1
-                    generate_code(Generator1.new)
-                when :generator2
-                    generate_code(Generator2.new)
-                when :generator3
-                    generate_code(Generator3.new)
-                when :generator4
-                    generate_code(Generator4.new)
-                when :code_map
-                    print_code_map
-                when :string_builder
-                    generate_string
+                when :composite_output_string_generator
+                    generate_output_string_code(CompositeOutputStringGenerator.new([
+                            OutputStringGenerator1.new,
+                            OutputStringGenerator2.new,
+                            OutputStringGenerator3.new,
+                            OutputStringGenerator4.new,
+                    ]))
+                when :output_string_generator1
+                    generate_output_string_code(OutputStringGenerator1.new)
+                when :output_string_generator2
+                    generate_output_string_code(OutputStringGenerator2.new)
+                when :output_string_generator3
+                    generate_output_string_code(OutputStringGenerator3.new)
+                when :output_string_generator4
+                    generate_output_string_code(OutputStringGenerator4.new)
                 else
-                    raise 'Bug'
+                    raise BrainfuckError, 'Bug'
             end
         end
 
-        def new_composite_generator
-            CompositeGenerator.new([
-                Generator1.new,
-                Generator2.new,
-                Generator3.new,
-                Generator4.new,
-            ])
+        def run_as_shortest_code_map_generator
+            print_code_map
         end
 
-        def generate_code(generator)
+        def generate_output_string_code(generator)
             text = ARGF.read
             code = generator.generate(text)
             puts Parser.new.parse(code).size
@@ -145,7 +149,7 @@ module Brainfuck
             end
         end
 
-        def generate_string
+        def generate_build_string_code
             map = CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE)
             ns = ARGF.read.chars.map(&:ord)
             codes = ns.map{|n| map[n].generate}

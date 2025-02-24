@@ -3,7 +3,7 @@ require_relative 'specification'
 
 module Brainfuck
 
-    class Generator3
+    class OutputStringGenerator3
 
         include Specification
 

@@ -5,7 +5,7 @@
 test:
 	@ruby -I./src/main/ ./src/test/all.rb
 
-.PHONY: demonstrate-generators
-demonstrate-generators:
-	@bash ./src/scripts/demonstrate-generators.sh
+.PHONY: demonstrate-output-string-generators
+demonstrate-output-string-generators:
+	@bash ./src/scripts/demonstrate-output-string-generators.sh
 

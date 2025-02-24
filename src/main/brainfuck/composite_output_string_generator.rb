@@ -1,7 +1,9 @@
+require_relative 'parser'
+
 module Brainfuck
 
-    # 複数の Generator でコードを生成し, 最も短いものを結果とする Generator.
-    class CompositeGenerator
+    # 複数の OutputStringGenerator でコードを生成し, 最も短いものを結果とする OutputStringGenerator.
+    class CompositeOutputStringGenerator
 
         def initialize(generators)
             @generators = generators

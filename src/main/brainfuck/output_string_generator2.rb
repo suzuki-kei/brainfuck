@@ -1,6 +1,6 @@
 module Brainfuck
 
-    class Generator2
+    class OutputStringGenerator2
 
         def generate(text)
             ns = text.chars.map(&:ord)

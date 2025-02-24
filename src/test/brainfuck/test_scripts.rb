@@ -11,7 +11,7 @@ module Brainfuck
 
         def test_demonstrate_generators
             Dir.chdir(SCRIPTS_DIR) do
-                stdout, stderr, status = Open3.capture3('bash demonstrate-generators.sh')
+                stdout, stderr, status = Open3.capture3('bash demonstrate-output-string-generators.sh')
                 assert_equal 0, status.exitstatus
             end
         end
