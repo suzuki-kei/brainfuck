@@ -82,6 +82,9 @@ module Brainfuck
                     parser.on('-m', '--code-map') {
                         options[:generator] = :code_map
                     }
+                    parser.on('-s', '--string-bulder') {
+                        options[:generator] = :string_builder
+                    }
                 end
 
                 parser.parse!(ARGV)
@@ -113,6 +116,8 @@ module Brainfuck
                     generate_code(Generator4.new)
                 when :code_map
                     print_code_map
+                when :string_builder
+                    generate_string
                 else
                     raise 'Bug'
             end
@@ -138,6 +143,14 @@ module Brainfuck
             CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE).sort.each do |n, code|
                 puts sprintf("%d\t%s", n, code.generate)
             end
+        end
+
+        def generate_string
+            map = CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE)
+            ns = ARGF.read.chars.map(&:ord)
+            codes = ns.map{|n| map[n].generate}
+            codes = codes.map{|code| "#{code}>".gsub(/>$/, '')}
+            puts codes.join(">\n")
         end
 
         def run_as_minifier

@@ -47,6 +47,9 @@ GENERATOR SUBCOMMAND OPTIONS
     -m, --code-map
         Prints shortest code to make each cell value.
 
+    -s, --string-builder
+        Generates brainfuck code that builds the specified text from the current cell onwards.
+
 MINIFY SUBCOMMAND OPTIONS
     minify subcommand has no options.
 
