@@ -79,8 +79,8 @@ module Brainfuck
                     parser.on('-4', '--generator4') {
                         options[:generator] = :generator4
                     }
-                    parser.on('-s', '--shortest-codes') {
-                        options[:generator] = :shortest_codes
+                    parser.on('-m', '--code-map') {
+                        options[:generator] = :code_map
                     }
                 end
 
@@ -111,8 +111,8 @@ module Brainfuck
                     generate_code(Generator3.new)
                 when :generator4
                     generate_code(Generator4.new)
-                when :shortest_codes
-                    print_shortest_codes
+                when :code_map
+                    print_code_map
                 else
                     raise 'Bug'
             end
@@ -134,7 +134,7 @@ module Brainfuck
             puts code
         end
 
-        def print_shortest_codes
+        def print_code_map
             CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE).sort.each do |n, code|
                 puts sprintf("%d\t%s", n, code.generate)
             end

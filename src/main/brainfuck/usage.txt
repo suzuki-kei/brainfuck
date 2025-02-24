@@ -44,7 +44,7 @@ GENERATOR SUBCOMMAND OPTIONS
         Generates brainfuck code that outputs the specified text with algorithm-4.
         see GENERATOR ALGORITHM-4 DETAILS for details.
 
-    -s, --shortest-codes
+    -m, --code-map
         Prints shortest code to make each cell value.
 
 MINIFY SUBCOMMAND OPTIONS
