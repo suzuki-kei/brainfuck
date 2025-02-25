@@ -1,4 +1,5 @@
 require 'optparse'
+require_relative 'build_string_generator'
 require_relative 'code_map'
 require_relative 'composite_output_string_generator'
 require_relative 'errors'
@@ -143,6 +144,8 @@ module Brainfuck
             puts code
         end
 
+        # TODO generate_shortest_code_map に名前を変える
+        # TODO ShortestCodeMapGenerator に切り出し, テストを書く.
         def print_code_map
             CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE).sort.each do |n, code|
                 puts sprintf("%d\t%s", n, code.generate)
@@ -150,11 +153,9 @@ module Brainfuck
         end
 
         def generate_build_string_code
-            map = CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE)
-            ns = ARGF.read.chars.map(&:ord)
-            codes = ns.map{|n| map[n].generate}
-            codes = codes.map{|code| "#{code}>".gsub(/<>$/, '')}
-            puts codes.join("\n")
+            text = ARGF.read
+            generator = BuildStringGenerator.new
+            puts generator.generate(text)
         end
 
         def run_as_minifier
