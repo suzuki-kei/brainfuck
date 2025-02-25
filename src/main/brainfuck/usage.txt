@@ -10,7 +10,7 @@ DESCRIPTION
         * interpreter mode (if no subcommand specified)
         * build-string-generator mode (if the build-string-generator subcommand specified)
         * output-string-generator mode (if the output-string-generator subcommand specified)
-        * shortest-code-map-generator mode (if the shortest-code-map-generator subcommand specified)
+        * code-map-generator mode (if the code-map-generator subcommand specified)
         * minifier mode (if the minify subcommand specified)
 
     In every mode, input (e.g. source code) can be specified from standard input or file.
@@ -23,7 +23,7 @@ SUBCOMMANDS
         Generates brainfuck code that outputs the specified string.
         see OUTPUT STRING GENERATOR OPTIONS for details.
 
-    shortest-code-map-generator
+    code-map-generator
         Prints shortest code to make each cell value.
 
     minify
@@ -34,7 +34,7 @@ OPTIONS
         Prints help message and exit.
 
 BUILD STRING GENERATOR SUBCOMMAND OPTIONS
-    has no options.
+    no options.
 
 OUTPUT STRING GENERATOR SUBCOMMAND OPTIONS
     -a, algorithm-all
@@ -56,11 +56,11 @@ OUTPUT STRING GENERATOR SUBCOMMAND OPTIONS
         Generates brainfuck code that outputs the specified string with algorithm-4.
         see OUTPUT STRING GENERATOR ALGORITHM-4 DETAILS for details.
 
-SHORTEST CODE MAP GENERATOR SUBCOMMAND OPTIONS
-    has no options.
+CODE MAP GENERATOR SUBCOMMAND OPTIONS
+    no options.
 
 MINIFY SUBCOMMAND OPTIONS
-    has no options.
+    no options.
 
 OUTPUT STRING GENERATOR ALGORITHM-1 DETAILS
     Makes target character code by repeating + command.

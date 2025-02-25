@@ -29,8 +29,8 @@ module Brainfuck
                     run_as_build_string_generator
                 when :output_string_generator
                     run_as_output_string_generator
-                when :shortest_code_map_generator
-                    run_as_shortest_code_map_generator
+                when :code_map_generator
+                    run_as_code_map_generator
                 when :minifier
                     run_as_minifier
                 else
@@ -57,9 +57,9 @@ module Brainfuck
                     when 'output-string-generator'
                         ARGV.shift
                         options[:mode] = :output_string_generator
-                    when 'shortest-code-map-generator'
+                    when 'code-map-generator'
                         ARGV.shift
-                        options[:mode] = :shortest_code_map_generator
+                        options[:mode] = :code_map_generator
                     when 'minify'
                         ARGV.shift
                         options[:mode] = :minifier
@@ -133,8 +133,10 @@ module Brainfuck
             end
         end
 
-        def run_as_shortest_code_map_generator
-            print_code_map
+        def generate_build_string_code
+            text = ARGF.read
+            generator = BuildStringGenerator.new
+            puts generator.generate(text)
         end
 
         def generate_output_string_code(generator)
@@ -144,18 +146,10 @@ module Brainfuck
             puts code
         end
 
-        # TODO generate_shortest_code_map に名前を変える
-        # TODO ShortestCodeMapGenerator に切り出し, テストを書く.
-        def print_code_map
+        def run_as_code_map_generator
             CodeMap.generate(MIN_CELL_VALUE..MAX_CELL_VALUE).sort.each do |n, code|
                 puts sprintf("%d\t%s", n, code.generate)
             end
-        end
-
-        def generate_build_string_code
-            text = ARGF.read
-            generator = BuildStringGenerator.new
-            puts generator.generate(text)
         end
 
         def run_as_minifier

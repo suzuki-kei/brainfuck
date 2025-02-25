@@ -15,14 +15,14 @@ function _brainfuck.bash_complete
                 COMPREPLY=($(compgen -W '-a --algorithm-all -1 --algorithm-1 -2 --algorithm-2 -3 --algorithm-3 -4 --algorithm-4' -- "${word}"))
             fi
             ;;
-        shortest-code-map-generator)
+        code-map-generator)
             # no-operation
             ;;
         minify)
             # no-operation
             ;;
         *)
-            COMPREPLY=($(compgen -W '-h --help build-string-generator output-string-generator shortest-code-map-generator minify' -- "${word}"))
+            COMPREPLY=($(compgen -W '-h --help build-string-generator output-string-generator code-map-generator minify' -- "${word}"))
             ;;
     esac
 }
