@@ -3,6 +3,7 @@ require_relative 'build_string_generator'
 require_relative 'code_map'
 require_relative 'composite_output_string_generator'
 require_relative 'errors'
+require_relative 'minifier'
 require_relative 'output_string_generator1'
 require_relative 'output_string_generator2'
 require_relative 'output_string_generator3'
@@ -154,8 +155,7 @@ module Brainfuck
 
         def run_as_minifier
             code = ARGF.read
-            minified_code = Parser.new.parse(code)
-            print minified_code
+            puts Minifier.new.minify(code)
         end
 
     end
