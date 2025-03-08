@@ -159,7 +159,7 @@ EXAMPLES
         Hello, World!
 
     Run in build-string-generator mode (string builder):
-        $ echo -n 'hello' | brainfuck generate -s
+        $ echo -n 'hello' | brainfuck build-string-generator
         >++++++++[-<+++++++++++++>]
         >++++++++++[-<++++++++++>]<+>
         >+++++++++[-<++++++++++++>]
@@ -167,7 +167,7 @@ EXAMPLES
         >++++++++++[-<+++++++++++>]<+>
 
     Run in output-string-generator mode (algorithm-3), specify code by pipe:
-        $ echo 'hello' | brainfuck generate -3
+        $ echo 'hello' | brainfuck output-string-generator -3
         58
         >++++++++[-<+++++++++++++>]<.
         ---.
