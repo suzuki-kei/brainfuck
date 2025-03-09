@@ -19,7 +19,7 @@ function _brainfuck.bash_complete
             # no-operation
             ;;
         minify)
-            # no-operation
+            COMPREPLY=($(compgen -W '-k --keep-format' -- "${word}"))
             ;;
         *)
             COMPREPLY=($(compgen -W '-h --help build-string-generator output-string-generator code-map-generator minify' -- "${word}"))

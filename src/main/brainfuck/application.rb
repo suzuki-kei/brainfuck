@@ -33,7 +33,7 @@ module Brainfuck
                 when :code_map_generator
                     run_as_code_map_generator
                 when :minifier
-                    run_as_minifier
+                    run_as_minifier(@options.fetch(:keep_format, false))
                 else
                     print_help
             end
@@ -90,6 +90,12 @@ module Brainfuck
                     }
                     parser.on('-4', '--algorithm-4') {
                         options[:generator] = :output_string_generator4
+                    }
+                end
+
+                if options[:mode] == :minifier
+                    parser.on('-k', '--keep-format') {
+                        options[:keep_format] = true
                     }
                 end
 
@@ -153,9 +159,9 @@ module Brainfuck
             end
         end
 
-        def run_as_minifier
+        def run_as_minifier(keep_format)
             code = ARGF.read
-            puts Minifier.new.minify(code)
+            puts Minifier.new.minify(code, keep_format: keep_format)
         end
 
     end
